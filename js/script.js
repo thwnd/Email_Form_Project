@@ -63,16 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             //https://hknu-ss-awards.netlify.app/
             //Netlify Functions를 호출하도록 URL 설정
-            //a
-            const response = await fetch('../functions/submit-form.js', {
-                method: 'POST',
-                body: formData
+            const response = await fetch('../functions/a.json', {
+                method: 'GET'
             });
 
             if (!response.ok) {
                 throw new Error('제출 중 오류가 발생했습니다.');
             }
 
+            console.log(response.json());
             const result = await response.json();
             alert('성공적으로 제출되었습니다!');
             form.reset();
