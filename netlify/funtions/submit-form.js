@@ -2,8 +2,27 @@ const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
 exports.handler = async (event) => {
+    if (event.httpMethod === 'OPTIONS') {
+        // CORS preflight 요청에 대한 응답
+        return {
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',          // 모든 도메인 허용
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS'
+            },
+            body: 'CORS preflight response',
+        };
+    }
+
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+        return {
+            statusCode: 405,
+            headers: {
+                'Access-Control-Allow-Origin': '*',          // 모든 도메인 허용
+            },
+            body: 'Method Not Allowed',
+        };
     }
 
     try {
@@ -32,9 +51,21 @@ exports.handler = async (event) => {
             }
         });
 
-        return { statusCode: 200, body: JSON.stringify({ message: 'Data saved successfully!' }) };
+        return {
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',         // 모든 도메인 허용
+            },
+            body: JSON.stringify({ message: 'Data saved successfully!' })
+        };
     } catch (error) {
         console.error('Error saving data:', error);
-        return { statusCode: 500, body: 'Error saving data' };
+        return {
+            statusCode: 500,
+            headers: {
+                'Access-Control-Allow-Origin': '*',         // 모든 도메인 허용
+            },
+            body: 'Error saving data'
+        };
     }
 };
