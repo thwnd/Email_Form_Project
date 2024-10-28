@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const formData = new FormData(form);
-
+//https://hknu-ss-awards.netlify.app/
             // Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('/.netlify/functions/submit-form', {
+            const response = await fetch('../netlify/functions/submit-form', {
                 method: 'POST',
                 body: formData
             });
