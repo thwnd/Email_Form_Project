@@ -44,3 +44,10 @@ button:hover {
     display: none;
     margin-left: 1rem;
 }
+.file-preview img {
+    max-width: 200px;
+    max-height: 150px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin-top: 5px;
+}
