@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!form.checkValidity()) {
             form.reportValidity();
-            return; 
+            return;
         }
 
         loading.style.display = 'inline';
@@ -61,17 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const formData = new FormData(form);
-            //https://hknu-ss-awards.netlify.app/
-            //Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('../functions/a.json', {
-                method: 'GET'
+            console.log('formData:', formData); // FormData 객체 확인
+            // Netlify Functions를 호출하도록 URL 설정
+            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form.js', {
+                method: 'POST',
+                body: formData
             });
 
             if (!response.ok) {
                 throw new Error('제출 중 오류가 발생했습니다.');
             }
 
-            console.log(response.json());
             const result = await response.json();
             alert('성공적으로 제출되었습니다!');
             form.reset();
@@ -86,3 +86,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
