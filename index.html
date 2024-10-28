@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKMU SS대회 수상 정보 제출</title>
+</head>
+<body>
+    <h1>대회 수상 정보 제출</h1>
+    <form id="awardForm">
+        <div class="form-group">
+            <label for="contestName">대회명 *</label>
+            <input type="text" id="contestName" name="contestName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="studentName">이름 *</label>
+            <input type="text" id="studentName" name="studentName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="studentId">학번 *</label>
+            <input type="text" id="studentId" name="studentId" 
+                   pattern="[0-9]{8}" 
+                   title="8자리 숫자로 입력해주세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="awardPhoto">상장 사진 *</label>
+            <input type="file" id="awardPhoto" name="awardPhoto" 
+                   accept="image/*" required>
+            <div id="photoPreview" class="file-preview"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="certDocument">증명서류 *</label>
+            <input type="file" id="certDocument" name="certDocument" 
+                   accept=".pdf,.jpg,.jpeg,.png" required>
+            <div id="docPreview" class="file-preview"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="additionalInfo">추가 정보</label>
+            <textarea id="additionalInfo" name="additionalInfo" 
+                      rows="3"></textarea>
+        </div>
+
+        <button type="submit">제출하기</button>
+        <span class="loading">제출 중...</span>
+    </form>
+</body>
+</html>
