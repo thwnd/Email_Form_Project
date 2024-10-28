@@ -63,10 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
 //https://hknu-ss-awards.netlify.app/
             // Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form', {
-                method: 'POST',
-                body: formData
-            });
+            // const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form', {
+            //     method: 'POST',
+            //     body: formData
+            // });
+            const response = await fetch('https://hknu-ss-awards.netlify.app/../index.html', {
+                method: 'GET',
+                //body: formData
+            }); 
 
             if (!response.ok) {
                 throw new Error('제출 중 오류가 발생했습니다.');
