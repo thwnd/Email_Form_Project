@@ -50,6 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 폼 제출 처리
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        console.log(e);
+        console.log(form);
+        console.log(form.checkValidity());
         
         if (!form.checkValidity()) {
             form.reportValidity();
