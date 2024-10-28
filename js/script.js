@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!form.checkValidity()) {
             form.reportValidity();
-            return;
+            return; 
         }
 
         loading.style.display = 'inline';
@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             //https://hknu-ss-awards.netlify.app/
             //Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form', {
+            //a
+            const response = await fetch('../functions/submit-form.js', {
                 method: 'POST',
                 body: formData
             });
