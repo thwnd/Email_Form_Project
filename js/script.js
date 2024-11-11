@@ -50,9 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 폼 제출 처리
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log(e);
-        console.log(form);
-        console.log(form.checkValidity());
         
         if (!form.checkValidity()) {
             form.reportValidity();
@@ -66,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             console.log('formData:', formData); // FormData 객체 확인
             // Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form.js', {
+            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form', {
                 method: 'POST',
                 body: formData
             });
