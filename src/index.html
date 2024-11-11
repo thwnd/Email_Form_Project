@@ -1,3 +1,5 @@
+<!-- src/index.html -->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,30 +23,19 @@
 
         <div class="form-group">
             <label for="studentId">학번 *</label>
-            <input type="text" id="studentId" name="studentId" pattern="[0-9]{10}" title="10자리 숫자로 입력해주세요" required>
+            <input type="text" id="studentId" name="studentId" required>
         </div>
 
         <div class="form-group">
-            <label for="awardPhoto">상장 사진 *</label>
-            <input type="file" id="awardPhoto" name="awardPhoto" accept="image/*" required>
-            <div id="photoPreview" class="file-preview"></div>
+            <label for="additionalInfo">추가 정보</label>
+            <input type="text" id="additionalInfo" name="additionalInfo">
         </div>
 
-        <div class="form-group">
-            <label for="certDocument">증명서류 *</label>
-            <input type="file" id="certDocument" name="certDocument" accept=".pdf,.jpg,.jpeg,.png" required>
-            <div id="docPreview" class="file-preview"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="additionalInfo">추가 정보(대회 url 등)</label>
-            <textarea id="additionalInfo" name="additionalInfo" rows="3"></textarea>
-        </div>
-
-        <button type="submit">제출하기</button>
-        <span class="loading" style="display: none;">제출 중...</span>
-        <span class="error-message" style="display: none; color: red; font-size: 0.875rem; margin-left: 1rem;"></span>
+        <button type="submit">제출</button>
     </form>
+
+    <div id="loading" style="display: none;">Submitting...</div>
+    <div id="errorMessage" style="display: none; color: red;">오류가 발생했습니다.</div>
 
     <script src="js/script.js"></script>
 </body>
