@@ -1,2 +1,8 @@
 [build]
-  functions = "netlify/functions"  # 함수 폴더 설정
+  functions = "netlify/functions"
+  publish = "src"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
