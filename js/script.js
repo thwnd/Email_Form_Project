@@ -1,90 +1,52 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('awardForm');
-    const loading = document.querySelector('.loading');
-    const errorMessage = document.querySelector('.error-message');
-    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 파일 크기 2MB 제한
+    const loading = document.getElementById('loading'); // 로딩 스피너 요소
+    const errorMessage = document.getElementById('errorMessage'); // 오류 메시지 요소
 
-    // 파일 미리보기 함수
-    function handleFilePreview(fileInput, previewDiv) {
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewDiv.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewDiv.innerHTML = `<p>${file.name}</p>`;
-            }
-        });
-    }
-
-    // 파일 크기 검사 함수
-    function validateFileSize(file) {
-        if (file.size > MAX_FILE_SIZE) {
-            alert("파일 크기는 2MB 이하로 제한됩니다.");
-            return false;
-        }
-        return true;
-    }
-
-    // 미리보기 핸들링
-    handleFilePreview(document.getElementById('awardPhoto'), document.getElementById('photoPreview'));
-    handleFilePreview(document.getElementById('certDocument'), document.getElementById('docPreview'));
-
-    // 파일 크기 제한 검사
-    document.getElementById('awardPhoto').addEventListener('change', (e) => {
-        if (!validateFileSize(e.target.files[0])) {
-            e.target.value = ''; // 유효하지 않으면 초기화
-        }
-    });
-    document.getElementById('certDocument').addEventListener('change', (e) => {
-        if (!validateFileSize(e.target.files[0])) {
-            e.target.value = ''; // 유효하지 않으면 초기화
-        }
-    });
-
-    // 폼 제출 처리
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
 
-        loading.style.display = 'inline';
-        errorMessage.style.display = 'none';
+        loading.style.display = 'inline'; // 로딩 스피너 표시
+        errorMessage.style.display = 'none'; // 오류 메시지 숨김
 
         try {
-            const formData = new FormData(form);
+            const formData = {
+                contestName: document.getElementById('contestName').value,
+                studentName: document.getElementById('studentName').value,
+                studentId: document.getElementById('studentId').value,
+                additionalInfo: document.getElementById('additionalInfo')?.value || '',
+            };
+
             console.log('formData:', formData); // FormData 객체 확인
-            // Netlify Functions를 호출하도록 URL 설정
-            const response = await fetch('https://hknu-ss-awards.netlify.app/.netlify/functions/submit-form', {
+
+            const response = await fetch('/.netlify/functions/submit-form', { // 상대 URL 사용
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
 
-            if (!response.ok) {
-                throw new Error('제출 중 오류가 발생했습니다.');
+            loading.style.display = 'none'; // 로딩 스피너 숨김
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message);
+                form.reset(); // 폼 초기화
+            } else {
+                alert('데이터 저장에 실패했습니다.');
             }
-
-            const result = await response.json();
-            alert('성공적으로 제출되었습니다!');
-            form.reset();
-            document.getElementById('photoPreview').innerHTML = '';
-            document.getElementById('docPreview').innerHTML = '';
-
         } catch (error) {
-            errorMessage.style.display = 'inline';
-            errorMessage.textContent = error.message;
-        } finally {
-            loading.style.display = 'none';
+            console.error('Error:', error);
+            loading.style.display = 'none'; // 로딩 스피너 숨김
+            alert('오류가 발생했습니다.');
         }
     });
 });
-
-
